@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 
-const Stocks = ({ addToWatchlist }) => {
+const Stocks = () => {
   const [stocks, setStocks] = useState([]);
 
   useEffect(() => {
@@ -17,11 +17,29 @@ const Stocks = ({ addToWatchlist }) => {
       .then((data) => setStocks(data))
       .catch((error) => console.error("Error fetching stocks:", error));
   }, []);
-  console.log(setStocks, "Stocksdata");
 
   const getRandomColor = () => {
     const colors = ["#FF0000", "#00FF00"]; // Red and Green
     return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const addToWatchlist = (stock) => {
+    // Add stock to watchlist
+    fetch("http://localhost:5000/api/watchlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(stock),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Show an alert with the message received from the server
+        alert(data.message);
+      })
+      .catch((error) =>
+        console.error("Error adding to watchlist:", error)
+      );
   };
 
   return (
@@ -46,10 +64,36 @@ const Stocks = ({ addToWatchlist }) => {
   );
 };
 
-const Watchlist = ({ watchlist }) => {
+const Watchlist = () => {
+  const [watchlist, setWatchlist] = useState([]);
+
+  useEffect(() => {
+    // Fetch stock data from the backend
+    fetch("http://localhost:5000/api/watchlist")
+      .then((res) => res.json())
+      .then((data) => setWatchlist(data))
+      .catch((error) => console.error("Error fetching stocks:", error));
+  }, []);
+
   const getRandomColor = () => {
     const colors = ["#FF0000", "#00FF00"]; // Red and Green
     return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const removeFromWatchlist = (symbol) => {
+    // Add stock to watchlist
+    fetch(`http://localhost:5000/api/watchlist/${symbol}`, {
+      method: "DELETE"
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Show an alert with the message received from the server
+        alert(data.message);
+        setWatchlist(data.watchlist);
+      })
+      .catch((error) =>
+        console.error("Error removing from watchlist:", error)
+      );
   };
 
   return (
@@ -64,6 +108,9 @@ const Watchlist = ({ watchlist }) => {
               {" "}
               ${stock.initial_price}
             </span>
+            <button onClick={() => removeFromWatchlist(stock.symbol)}>
+              Remove from Watchlist
+            </button>
           </li>
         ))}
       </ul>
@@ -72,27 +119,6 @@ const Watchlist = ({ watchlist }) => {
 };
 
 function App() {
-  const [watchlist, setWatchlist] = useState([]);
-
-  const addToWatchlist = (stock) => {
-    // Add stock to watchlist
-    fetch("http://localhost:5000/api/watchlist", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(stock),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Show an alert with the message received from the server
-        alert(data.message);
-        setWatchlist([...watchlist, stock]);
-      })
-      .catch((error) =>
-        console.error("Error adding to watchlist:", error)
-      );
-  };
 
   return (
     <Router>
@@ -103,11 +129,11 @@ function App() {
       <Routes>
         <Route
           path="/stocks"
-          element={<Stocks addToWatchlist={addToWatchlist} />}
+          element={<Stocks />}
         />
         <Route
           path="/watchlist"
-          element={<Watchlist watchlist={watchlist} />}
+          element={<Watchlist />}
         />
       </Routes>
     </Router>
