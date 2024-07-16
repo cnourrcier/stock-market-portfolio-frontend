@@ -1,31 +1,30 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  NavLink,
-} from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Box, Container, CssBaseline } from '@mui/material';
+import NavBar from './components/NavBar';
 import Stocks from './components/Stocks';
-import Watchlist from "./components/Watchlist";
+import Watchlist from './components/Watchlist';
+import Footer from './components/Footer';
 
 function App() {
 
   return (
     <Router>
-      <nav>
-        <NavLink to="/stocks">Stocks</NavLink>
-        <NavLink to="/watchlist">Watchlist</NavLink>
-      </nav>
-      <Routes>
-        <Route
-          path="/stocks"
-          element={<Stocks />}
-        />
-        <Route
-          path="/watchlist"
-          element={<Watchlist />}
-        />
-      </Routes>
+      <CssBaseline />
+      <div className='main-content'>
+        <NavBar />
+        <Box mt={2}>
+          <Container>
+            <Routes>
+              <Route path='/stocks' element={<Stocks />}
+              />
+              <Route path='/watchlist' element={<Watchlist />}
+              />
+            </Routes>
+          </Container>
+        </Box>
+      </div>
+      <Footer />
     </Router>
   );
 }
