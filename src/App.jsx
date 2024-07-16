@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Box, Container, CssBaseline } from '@mui/material';
 import NavBar from './components/NavBar';
 import Stocks from './components/Stocks';
@@ -16,10 +16,9 @@ function App() {
         <Box mt={2}>
           <Container>
             <Routes>
-              <Route path='/stocks' element={<Stocks />}
-              />
-              <Route path='/watchlist' element={<Watchlist />}
-              />
+              <Route path='/' element={<Navigate to='/stocks' />} />
+              <Route path='/stocks' element={<Stocks />} />
+              <Route path='/watchlist' element={<Watchlist />} />
             </Routes>
           </Container>
         </Box>
