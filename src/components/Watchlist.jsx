@@ -9,7 +9,7 @@ const Watchlist = () => {
 
     useEffect(() => {
         // Fetch stock data from the backend
-        fetch(`http://localhost:5000/api/watchlist?sortBy=${sortBy}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
+        fetch(`/api/watchlist?sortBy=${sortBy}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
             .then((res) => res.json())
             .then((data) => setWatchlist(data))
             .catch((error) => console.error("Error fetching stocks:", error));
@@ -22,7 +22,7 @@ const Watchlist = () => {
 
     const removeFromWatchlist = (symbol) => {
         // Add stock to watchlist
-        fetch(`http://localhost:5000/api/watchlist/${symbol}`, {
+        fetch(`/api/watchlist/${symbol}`, {
             method: "DELETE"
         })
             .then((res) => res.json())

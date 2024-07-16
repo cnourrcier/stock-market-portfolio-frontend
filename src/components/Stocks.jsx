@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Container, Typography, Select, MenuItem, InputLabel, FormControl, TextField, List, ListItem, ListItemText, Button, Grid } from "@mui/material";
+import { useEffect, useState } from 'react';
+import { Container, Typography, Select, MenuItem, InputLabel, FormControl, TextField, List, ListItem, ListItemText, Button, Grid } from '@mui/material';
 
 const Stocks = () => {
     const [stocks, setStocks] = useState([]);
@@ -9,23 +9,23 @@ const Stocks = () => {
 
     useEffect(() => {
         // Fetch stock data from the backend
-        fetch(`http://localhost:5000/api/stocks?sortBy=${sortBy}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
+        fetch(`/api/stocks?sortBy=${sortBy}&minPrice=${minPrice}&maxPrice=${maxPrice}`)
             .then((res) => res.json())
             .then((data) => setStocks(data))
-            .catch((error) => console.error("Error fetching stocks:", error));
+            .catch((error) => console.error('Error fetching stocks:', error));
     }, [sortBy, minPrice, maxPrice]);
 
     const getRandomColor = () => {
-        const colors = ["#FF0000", "#00FF00"]; // Red and Green
+        const colors = ['#FF0000', '#00FF00']; // Red and Green
         return colors[Math.floor(Math.random() * colors.length)];
     };
 
     const addToWatchlist = (stock) => {
         // Add stock to watchlist
-        fetch("http://localhost:5000/api/watchlist", {
-            method: "POST",
+        fetch('/api/watchlist', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(stock),
         })
@@ -35,7 +35,7 @@ const Stocks = () => {
                 alert(data.message);
             })
             .catch((error) =>
-                console.error("Error adding to watchlist:", error)
+                console.error('Error adding to watchlist:', error)
             );
     };
 
@@ -75,7 +75,7 @@ const Stocks = () => {
                         label='Max Price'
                         type='number'
                         value={maxPrice}
-                        onChange={(e) => setMinPrice(e.target.value)}
+                        onChange={(e) => setMaxPrice(e.target.value)}
                     />
                 </Grid>
             </Grid>
