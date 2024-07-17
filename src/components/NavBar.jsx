@@ -1,7 +1,9 @@
-import { AppBar, Toolbar, Box, Button } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-const NavBar = () => {
+const NavBar = ({ toggleTheme, darkMode }) => {
     return (
         <AppBar position='static'>
             <Toolbar>
@@ -13,6 +15,9 @@ const NavBar = () => {
                         Watchlist
                     </Button>
                 </Box>
+                <IconButton color='inherit' onClick={toggleTheme}>
+                    {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
             </Toolbar>
         </AppBar>
     )

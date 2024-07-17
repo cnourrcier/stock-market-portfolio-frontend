@@ -89,7 +89,7 @@ const Watchlist = () => {
                         />
                         <Button
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             onClick={() => removeFromWatchlist(stock.symbol)}
                         >
                             Remove from Watchlist
